@@ -1,3 +1,9 @@
 .App {
- overflow-x: auto;
+ width: 1200px;
+ height: 100%;
+ padding: 100px;
+ @media (max-width: 768px) {
+  font-size: 12px;
+  padding: 0px;
+ }
 }
