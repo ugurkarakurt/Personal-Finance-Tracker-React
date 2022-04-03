@@ -1,6 +1,6 @@
 # Star Wars List (with swapi.dev & json-server)
 
-- [Visit > Project ](https://personal-financel-tracker.surge.sh/).
+- [Visit > Project ](https://personal-finance-tracker.surge.sh/).
 
 Contact list created with a **Fake REST API**
 
