@@ -11,6 +11,7 @@ export const trackerSlice = createSlice({
     newCurrency: "",
     currenciesObj: "",
     rowID: "",
+    disabled: false,
   },
   reducers: {
     values: (state, action) => {
@@ -34,6 +35,9 @@ export const trackerSlice = createSlice({
     rowID: (state, action) => {
       state.rowID = action.payload;
     },
+    disabled: (state, action) => {
+     state.disabled = action.payload;
+   },
   },
 });
 
@@ -46,6 +50,7 @@ export const {
   newCurrency,
   currenciesObj,
   rowID,
+  disabled
 } = trackerSlice.actions;
 
 export default trackerSlice.reducer;

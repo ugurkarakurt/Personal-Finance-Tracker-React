@@ -19,6 +19,7 @@ import {
   income,
   expenses,
   rowID,
+  disabled,
 } from "../../trackerSlice";
 
 export default function TrackerTable() {
@@ -66,6 +67,7 @@ export default function TrackerTable() {
     axios
       .get(`http://localhost:3000/results`)
       .then((res) => {
+        dispatch(disabled(true));
         const response = res.data;
         const numbers = response.map(function (x) {
           const obj = {
@@ -83,31 +85,36 @@ export default function TrackerTable() {
       })
       .then((datas) => {
         datas.map((data) => {
-          axios
-            .put(`http://localhost:3000/results/${data.id}`, {
-              income: data.income,
-              expenses: data.expenses,
-            })
-            .then(() => {
-              axios.get(`http://localhost:3000/results`).then((res) => {
-                const response = res.data;
-                dispatch(values(response));
-                dispatch(baseCurrency(currency));
-              });
-            })
-            .then(() => {
-              axios
-                .get(`https://api.vatcomply.com/rates?base=${currency}`)
-                .then((res) => {
-                  const response = res.data;
-                  const entries = Object.entries(response.rates);
-
-                  dispatch(currenciesObj(response));
-                  dispatch(currencies(entries));
-                  dispatch(baseCurrency(response.base));
-                });
-            });
+          axios.put(`http://localhost:3000/results/${data.id}`, {
+            income: data.income,
+            expenses: data.expenses,
+          });
         });
+      })
+      .then(() => {
+        axios.get(`http://localhost:3000/results`).then((res) => {
+          const response = res.data;
+          dispatch(values(response));
+          dispatch(baseCurrency(currency));
+        });
+      })
+      .then(() => {
+        axios
+          .get(`https://api.vatcomply.com/rates?base=${currency}`)
+          .then((res) => {
+            const response = res.data;
+            const entries = Object.entries(response.rates);
+
+            dispatch(currenciesObj(response));
+            dispatch(currencies(entries));
+            dispatch(baseCurrency(response.base));
+          });
+      })
+      .then(() => {
+        dispatch(disabled(false));
+      })
+      .catch(function (error) {
+        console.warn(error);
       });
   };
 
@@ -121,6 +128,7 @@ export default function TrackerTable() {
             <FormControl fullWidth>
               <InputLabel>Curr.</InputLabel>
               <Select
+                disabled={tracker.disabled ? true : false}
                 onChange={setCurrency}
                 value={tracker.baseCurrency}
                 label={tracker.baseCurrency}
