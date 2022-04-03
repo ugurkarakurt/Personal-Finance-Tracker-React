@@ -22,7 +22,7 @@ npm install -g json-server
 After the installations are successful, we need to run Json-server
 
 ```
-json-server --watch fake-api/swapi.json
+json-server --watch src/fakeAPI.json
 ```
 
 ###### Now we are ready to start the project
