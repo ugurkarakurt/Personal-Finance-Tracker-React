@@ -1,4 +1,4 @@
-# Star Wars List (with swapi.dev & json-server)
+# Personal Finance Tracker with React (with swapi.dev & json-server)
 
 - [Visit > Project ](https://personal-finance-tracker.surge.sh/).
 
